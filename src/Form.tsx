@@ -1,39 +1,38 @@
+import { type Task } from "./types";
 import { useState } from "react";
 
-// dichiarazione tipo prop
-type props = {
-  addTask: (text: string) => void; // richiamo la funzione su parent passando una stringa.
+type FormProps = {
+  addTask: (task: Task) => void;
 };
 
-const Form = ({ addTask }: props) => {
-  const [text, setText] = useState<string>("");
+const Form = ({ addTask }: FormProps) => {
+  const [text, setText] = useState("");
 
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (!text) {
-      alert("no input");
-      return;
+      alert("no task added");
     }
-    console.log(text);
-    addTask(text);
-    setText("");
+    addTask({
+      id: new Date().getTime().toString(),
+      description: text,
+      isCompleted: false,
+    });
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <input
-          className="form-input"
-          type="text"
-          value={text}
-          name="text"
-          onChange={(e) => setText(e.target.value)}
-        />
-        <button className="btn" type="submit">
-          add task
-        </button>
-      </form>
-    </>
+    <form className="form task-form" onSubmit={handleSubmit}>
+      <input
+        type="text"
+        className="form-input"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+      />
+      <button type="submit" className="btn">
+        addTask
+      </button>
+    </form>
   );
 };
 

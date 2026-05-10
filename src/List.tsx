@@ -1,21 +1,24 @@
-import type { Task } from "./types";
+import { type Task } from "./types";
 
-type Props = {
+type ListProps = {
   tasks: Task[];
-  toggleTask: (id: number) => void;
+  toggleComplete: ({ id }: { id: string }) => void;
 };
 
-const List = ({ tasks, toggleTask }: Props) => {
+const List = ({ tasks, toggleComplete }: ListProps) => {
   return (
     <ul>
       {tasks.map((task) => {
         return (
           <li key={task.id}>
-            {task.description}
+            <p>{task.description}</p>
             <input
+              className="task-text"
               type="checkbox"
-              defaultChecked={task.isCompleted}
-              onChange={() => toggleTask(task.id)}
+              checked={task.isCompleted}
+              onChange={() => {
+                toggleComplete({ id: task.id });
+              }}
             />
           </li>
         );
