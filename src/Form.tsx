@@ -13,12 +13,14 @@ const Form = ({ addTask }: FormProps) => {
 
     if (!text) {
       alert("no task added");
+      return;
     }
     addTask({
       id: new Date().getTime().toString(),
       description: text,
       isCompleted: false,
     });
+    setText("");
   };
 
   return (
