@@ -29,6 +29,10 @@ function App() {
     );
   };
 
+  const deleteTask = ({ id }: { id: string }) => {
+    setTasks(tasks.filter((task) => task.id !== id));
+  };
+
   useEffect(() => {
     updateStorage(tasks);
   }, [tasks]);
@@ -36,7 +40,11 @@ function App() {
   return (
     <>
       <Form addTask={addTask} />
-      <List tasks={tasks} toggleComplete={toggleComplete} />
+      <List
+        tasks={tasks}
+        toggleComplete={toggleComplete}
+        deleteTask={deleteTask}
+      />
     </>
   );
 }

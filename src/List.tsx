@@ -3,15 +3,15 @@ import { type Task } from "./types";
 type ListProps = {
   tasks: Task[];
   toggleComplete: ({ id }: { id: string }) => void;
+  deleteTask: ({ id }: { id: string }) => void;
 };
 
-const List = ({ tasks, toggleComplete }: ListProps) => {
+const List = ({ tasks, toggleComplete, deleteTask }: ListProps) => {
   return (
-    <ul>
+    <ul className="list">
       {tasks.map((task) => {
         return (
           <li key={task.id}>
-            <p>{task.description}</p>
             <input
               className="task-text"
               type="checkbox"
@@ -20,6 +20,16 @@ const List = ({ tasks, toggleComplete }: ListProps) => {
                 toggleComplete({ id: task.id });
               }}
             />
+            <p>{task.description}</p>
+            <button
+              className="btn"
+              type="button"
+              onClick={() => {
+                deleteTask({ id: task.id });
+              }}
+            >
+              Delete
+            </button>
           </li>
         );
       })}
